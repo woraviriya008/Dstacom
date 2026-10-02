@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COE67-321 | Final Exam Study Portal (Minimal Edition)</title>
+  <!-- Google Tailwind CDN allowlisted by environment -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --bg-page: #fafafa;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f4f4f5;
+      --bg-input: #ffffff;
+      --border: #e4e4e7;
+      --border-subtle: #f4f4f5;
+      --text-main: #09090b;
+      --text-secondary: #52525b;
+      --text-muted: #71717a;
+      --accent: #18181b;
+      --accent-text: #ffffff;
+      --tag-bg: #f4f4f5;
+      --tag-text: #27272a;
+      --tag-border: #e4e4e7;
+      --card-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --code-bg: #f4f4f5;
+    }
+    .dark {
+      --bg-page: #09090b;
+      --bg-surface: #121215;
+      --bg-subtle: #18181b;
+      --bg-input: #18181b;
+      --border: #27272a;
+      --border-subtle: #1f1f23;
+      --text-main: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent: #f4f4f5;
+      --accent-text: #09090b;
+      --tag-bg: #18181b;
+      --tag-text: #e4e4e7;
+      --tag-border: #27272a;
+      --card-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --code-bg: #18181b;
+    }
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .surface-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--card-shadow);
+    }
+    .subtle-box {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border);
+    }
+    .tab-btn {
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+      background-color: var(--bg-subtle);
+    }
+    .tab-btn.active {
+      background-color: var(--accent);
+      color: var(--accent-text);
+      font-weight: 600;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: var(--bg-page);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col custom-scroll text-sm">
+
+  <!-- MINIMAL CLEAN HEADER -->
+  <header class="surface-card border-b sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 sm:px-6 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-[var(--accent)] text-[var(--accent-text)] font-semibold flex items-center justify-center text-xs tracking-wider">
+          COE
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm sm:text-base font-semibold text-[var(--text-main)] tracking-tight">COE67-321 Data Communication & Network</h1>
+            <span class="text-[11px] px-2 py-0.5 rounded-full subtle-box text-[var(--text-secondary)] font-medium">Final Exam 2569</span>
+          </div>
+          <p class="text-xs text-[var(--text-muted)]">สำนักวิชาวิศวกรรมศาสตร์ฯ มหาวิทยาลัยวลัยลักษณ์ • ผศ.ดร.ชิระวัฒน์ วัฒนพานิช</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleTheme()" id="theme-btn" class="subtle-box px-2.5 py-1.5 rounded-lg text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-main)] transition flex items-center gap-1.5" title="สลับธีม สว่าง / มืด">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text" class="hidden sm:inline">โหมดมืด</span>
+        </button>
+
+        <span class="text-xs text-[var(--text-muted)] hidden md:inline px-2">|</span>
+        <span class="text-xs text-[var(--text-secondary)] hidden md:inline">60 ข้อ • 25 คะแนน • 120 นาที</span>
+
+        <button onclick="window.print()" class="subtle-box px-3 py-1.5 rounded-lg text-xs font-medium text-[var(--text-main)] hover:bg-[var(--bg-subtle)] transition flex items-center gap-1.5">
+          <span>🖨️ พิมพ์ / PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MINIMAL CLEAN TABS -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex space-x-1.5 overflow-x-auto py-2 border-t border-[var(--border)] custom-scroll text-xs">
+      <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn active px-3 py-1.5 rounded-lg whitespace-nowrap">
+        โครงสร้างการสอบ
+      </button>
+      <button onclick="switchTab('l4')" id="tab-l4" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        หมวด 1: L4 Transport
+      </button>
+      <button onclick="switchTab('l3')" id="tab-l3" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        หมวด 2: L3 Network
+      </button>
+      <button onclick="switchTab('l1l2')" id="tab-l1l2" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        หมวด 3: L1-L2 & Latency
+      </button>
+      <button onclick="switchTab('l7')" id="tab-l7" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        หมวด 4: L7 Application
+      </button>
+      <button onclick="switchTab('l5')" id="tab-l5" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap font-medium text-[var(--text-main)]">
+        หมวด 5: ยุทธศาสตร์ & คำนวณมือ
+      </button>
+      <button onclick="switchTab('tricks')" id="tab-tricks" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        15 ทริค & กับดักข้อสอบ
+      </button>
+      <button onclick="switchTab('quiz1')" id="tab-quiz1" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        ข้อสอบชุดที่ 1 (Conceptual)
+      </button>
+      <button onclick="switchTab('quiz2')" id="tab-quiz2" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        ข้อสอบชุดที่ 2 (Analytical)
+      </button>
+      <button onclick="switchTab('calc')" id="tab-calc" class="tab-btn px-3 py-1.5 rounded-lg whitespace-nowrap">
+        Lab คำนวณอัตโนมัติ
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6 sm:px-6">
+
+    <!-- ==================== TAB 0: OVERVIEW ==================== -->
+    <div id="content-overview" class="space-y-6">
+      <div class="surface-card rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xs font-medium px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">Exam Study Guide</span>
+          <span class="text-xs text-[var(--text-muted)]">• ภาคการศึกษาที่ 1 / 2569</span>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)]">คู่มือทบทวนและจำลองข้อสอบปลายภาค (Comprehensive Study Portal)</h2>
+        <p class="mt-2 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed max-w-3xl">
+          รวบรวมเนื้อหาครบทุกประเด็นสำคัญตามหลักสูตร ครอบคลุมทั้งแนวคิดเชิงสถาปัตยกรรม (Conceptual), การคำนวณทางวิศวกรรม (Analytical), 
+          และการแกะรอยวินิจฉัยโปรโตคอล (Diagnostic & Packet Tracing) พร้อมชุดแบบฝึกหัดเสมือนจริง 2 ชุด (20 ข้อ)
+        </p>
+      </div>
+
+      <!-- Exam Structure 3 Columns -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="surface-card rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-semibold text-[var(--text-main)]">Part 1: Conceptual MC</span>
+              <span class="text-[var(--text-muted)]">40 ข้อ</span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+              ทฤษฎีสถาปัตยกรรม, Header Invariants, State Machine, RFC มาตรฐาน และความสัมพันธ์ระหว่างเลเยอร์
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[var(--border)] flex justify-between items-center text-xs text-[var(--text-muted)]">
+            <span>คะแนน: <strong>10.0 คะแนน</strong></span>
+            <span>เวลา: <strong>35–40 นาที</strong></span>
+          </div>
+        </div>
+
+        <div class="surface-card rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-semibold text-[var(--text-main)]">Part 2: Analytical Calculations</span>
+              <span class="text-[var(--text-muted)]">10 ข้อ</span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+              การคำนวณทางวิศวกรรม: BDP, Clark Threshold, Fragmentation, Delay Budget, MSS และ Subnetting
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[var(--border)] flex justify-between items-center text-xs text-[var(--text-muted)]">
+            <span>คะแนน: <strong>7.5 คะแนน</strong></span>
+            <span>เวลา: <strong>40 นาที</strong></span>
+          </div>
+        </div>
+
+        <div class="surface-card rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-semibold text-[var(--text-main)]">Part 3: Diagnostic & Tracing</span>
+              <span class="text-[var(--text-muted)]">10 ข้อ</span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+              การวิเคราะห์ Packet Logs, TCP State Transitions, ARP/Switch Forwarding, Routing Table LPM และ ICMPv6
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[var(--border)] flex justify-between items-center text-xs text-[var(--text-muted)]">
+            <span>คะแนน: <strong>7.5 คะแนน</strong></span>
+            <span>เวลา: <strong>40 นาที</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Essential Notice -->
+      <div class="subtle-box rounded-xl p-4 text-xs space-y-1.5 text-[var(--text-secondary)]">
+        <strong class="font-semibold text-[var(--text-main)] block">ข้อกำหนดและข้อแนะนำสำคัญในห้องสอบ:</strong>
+        <p>• <strong>ไม่อนุญาตให้ใช้เครื่องคิดเลขและเอกสารทุกชนิด:</strong> ตัวเลขทั้งหมดออกแบบให้สามารถตัดทอนและคำนวณด้วยมือได้อย่างลงตัว</p>
+        <p>• <strong>ความเคร่งครัดเรื่องหน่วยวิศวกรรม:</strong> ใน Part 2 และ Part 3 ต้องระบุหน่วยให้ถูกต้องเสมอ (เช่น <code class="px-1 py-0.5 rounded bg-[var(--code-bg)] text-[var(--text-main)]">Bytes</code>, <code class="px-1 py-0.5 rounded bg-[var(--code-bg)] text-[var(--text-main)]">bits</code>, <code class="px-1 py-0.5 rounded bg-[var(--code-bg)] text-[var(--text-main)]">ms</code>, <code class="px-1 py-0.5 rounded bg-[var(--code-bg)] text-[var(--text-main)]">Mbps</code> หรือ <code class="px-1 py-0.5 rounded bg-[var(--code-bg)] text-[var(--text-main)]">8-byte units</code>)</p>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 1: L4 TRANSPORT ==================== -->
+    <div id="content-l4" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">หมวดที่ 1: สถาปัตยกรรม Transport Layer และการควบคุมความคับคั่ง</h2>
+          <p class="text-xs text-[var(--text-muted)]">lecture06 • RFC 5681 • RFC 7323</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">L4 End-to-End</span>
+      </div>
+
+      <!-- 1.1 -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">1.1 รากฐานและความแตกต่างของ TCP และ UDP</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="subtle-box p-3.5 rounded-lg space-y-1.5">
+            <span class="font-semibold text-[var(--text-main)] block">TCP (Byte-Stream Connection-Oriented)</span>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• ให้บริการแบบ Byte-Stream มีการเชื่อมต่อ (3-Way Handshake) ก่อนส่งข้อมูล</p>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• มีกลไกรับประกันความถูกต้อง (Reliability) ผ่าน Sequence และ ACK</p>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• มี Flow Control (ปกป้องบัฟเฟอร์ฝั่งรับ) และ Congestion Control (ปกป้องเครือข่าย)</p>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• <strong>Header Overhead:</strong> ขั้นต่ำ 20 ไบต์ (ขยายได้ถึง 60 ไบต์เมื่อมี Options)</p>
+          </div>
+          <div class="subtle-box p-3.5 rounded-lg space-y-1.5">
+            <span class="font-semibold text-[var(--text-main)] block">UDP (Message-Oriented Datagram)</span>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• ให้บริการแบบ Datagram Connectionless น้ำหนักเบา ไม่สร้างการเชื่อมต่อ</p>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• ไม่มีการควบคุมการไหลหรือความคับคั่ง</p>
+            <p class="text-[var(--text-secondary)] leading-relaxed">• <strong>Header Overhead:</strong> ขนาดคงที่แน่นอน 8 ไบต์ (Src Port, Dst Port, Length, Checksum ช่องละ 2 ไบต์)</p>
+            <p class="text-[var(--text-main)] font-medium leading-relaxed">• <strong>กฎ Checksum:</strong> IPv4 เป็น Optional (ตั้งเป็น 0 ได้) แต่ใน IPv6 เป็น <strong>Mandatory (ห้ามเป็น 0 หากเป็น 0 จะถูกทิ้งทันที)</strong></p>
+          </div>
+        </div>
+
+        <div class="subtle-box p-3 rounded-lg text-xs space-y-1">
+          <span class="font-semibold text-[var(--text-main)]">การจัดสรรหมายเลขพอร์ต IANA (0 – 65,535):</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[var(--text-secondary)]">
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              <strong class="text-[var(--text-main)] block">Well-Known (0 – 1,023)</strong>
+              ระบบมาตรฐาน สงวนสิทธิ์เฉพาะ Root/Privileged ในการ Bind
+            </div>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              <strong class="text-[var(--text-main)] block">Registered (1,024 – 49,151)</strong>
+              สำหรับแอปพลิเคชันทั่วไป ไม่ต้องใช้สิทธิ์พิเศษ
+            </div>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              <strong class="text-[var(--text-main)] block">Dynamic / Private (49,152 – 65,535)</strong>
+              สุ่มใช้เป็น Ephemeral Ports ชั่วคราวฝั่งไคลเอนต์
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.2 -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">1.2 วงจรการเชื่อมต่อและ State Machine ของ TCP</h3>
+        <div class="space-y-2 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">TCP 3-Way Handshake & ISN Selection:</strong>
+            <p>• ขั้นตอน: Client SYN(seq=x) ➔ Server SYN+ACK(seq=y, ack=x+1) ➔ Client ACK(seq=x+1, ack=y+1)</p>
+            <p>• <strong>สุ่ม ISN:</strong> ต้องสุ่มเลือกแยกกันเป็นอิสระ แทนที่จะเริ่มที่ 0 เสมอ เพื่อป้องกันแพ็กเก็ตตกค้าง (Delayed Duplicate Segments) จากเซสชันเก่าข้ามมารบกวน</p>
+            <p>• ธง SYN และ FIN ใช้ Sequence Number เสมือน 1 ไบต์เสมอ</p>
+          </div>
+
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">TCP 4-Way Teardown & Half-Close:</strong>
+            <p>• ฝั่งปิดก่อน (Active Close) ส่ง FIN (เข้าสู่ <code class="px-1 rounded bg-[var(--code-bg)]">FIN_WAIT_1</code>) ➔ ฝั่งรับตอบ ACK (เข้าสู่ <code class="px-1 rounded bg-[var(--code-bg)]">CLOSE_WAIT</code> ฝั่งส่งเข้า <code class="px-1 rounded bg-[var(--code-bg)]">FIN_WAIT_2</code>)</p>
+            <p>• <strong>สภาวะ Half-Close:</strong> ฝั่งที่อยู่ในสถานะ CLOSE_WAIT ยังสามารถส่งข้อมูลที่ค้างในบัฟเฟอร์ต่อไปได้จนจบ ก่อนจะส่ง FIN ของตนเอง (เข้าสู่ LAST_ACK)</p>
+          </div>
+
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">บทบาทของสถานะ TIME_WAIT (2MSL):</strong>
+            <p>ฝั่ง Active Close ต้องคงอยู่ในสถานะ TIME_WAIT เป็นระยะเวลา $2\text{MSL} \approx 120$ วินาที เพื่อ: (1) รับประกันว่า ACK สุดท้ายส่งถึงปลายทาง (หากหายจะตอบซ้ำเมื่ออีกฝ่ายส่ง FIN มาใหม่) และ (2) ปล่อยให้แพ็กเก็ตตกค้างทั้งหมดสลายตัวจนหมดสิ้น</p>
+          </div>
+
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">TCP RST (Reset) Triggers:</strong>
+            <p>สร้างและส่ง Segment แฟล็ก RST ทันทีเมื่อ: มีแพ็กเก็ตส่งมายังพอร์ตที่ไม่มี Listening Socket หรือ Process ใดเปิดรับอยู่ ช่วยตัดปัญหาและแจ้งฝั่งส่งทันที (Connection Refused)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.3 -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">1.3 Flow Control & Congestion Control (RFC 5681)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Flow Control vs Congestion Control</strong>
+            <p>• Flow Control: ปกป้องบัฟเฟอร์โฮสต์ฝั่งรับ โดยใช้หน้าต่าง <code class="px-1 rounded bg-[var(--code-bg)]">rwnd</code></p>
+            <p>• Congestion Control: ปกป้องเครือข่ายและเราเตอร์คอขวด โดยใช้หน้าต่าง <code class="px-1 rounded bg-[var(--code-bg)]">cwnd</code></p>
+            <p>• ปริมาณข้อมูลค้างส่งจริง: $\text{Effective Window} = \min(cwnd, rwnd)$</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Silly Window Syndrome (SWS) & Clark</strong>
+            <p>• ปัญหา: แอปฝั่งรับดึงข้อมูลทีละน้อย ทำให้โฆษณา Window เล็ก เปลือง Overhead</p>
+            <p>• <strong>Clark's Solution (ฝั่งรับ):</strong> ระงับการโฆษณา Window Update ไว้จนกว่าจะมีที่ว่างอย่างน้อย 1 MSS เต็ม หรือครึ่งหนึ่งของบัฟเฟอร์ทั้งหมด</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1 md:col-span-2">
+            <strong class="text-[var(--text-main)] block">Nagle's Algorithm vs Delayed ACK Interaction</strong>
+            <p>• ฝั่งส่ง Nagle กักแพ็กเก็ตเล็กไว้จนกว่าจะได้ ACK หรือเต็ม MSS ขณะที่ Delayed ACK ฝั่งรับหน่วงเวลาส่ง ACK นานถึง ~200ms</p>
+            <p>• ส่งผลให้เกิด Temporary Deadlock ใน Interactive Apps แก้ไขโดยปิด Nagle ด้วย Socket Option: <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)] font-mono">TCP_NODELAY</code></p>
+          </div>
+        </div>
+
+        <div class="subtle-box p-3.5 rounded-lg text-xs space-y-2">
+          <strong class="text-[var(--text-main)] font-semibold block">สรุปสูตรคำนวณสำคัญ (Transport Layer):</strong>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[var(--text-secondary)] font-mono">
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              1. BDP (bits) = R (bps) × RTT (sec)<br>
+              Buffer_min (Bytes) = BDP / 8
+            </div>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              2. Clark Update Threshold =<br>
+              min( MSS, Buffer_Total / 2 )
+            </div>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              3. Fast Recovery (RFC 5681):<br>
+              ssthresh_new = max( FlightSize / 2, 2 × MSS )<br>
+              cwnd_recovery = ssthresh_new + 3 × MSS
+            </div>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)]">
+              4. Seq Wrap Time (T_wrap):<br>
+              T_wrap = (2^32 Bytes) / (Rate Bytes/sec)<br>
+              * แก้ไขปัญหาด้วย PAWS (RFC 7323)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: L3 NETWORK ==================== -->
+    <div id="content-l3" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">หมวดที่ 2: สถาปัตยกรรม Network Layer, IPv4/IPv6 และการกำหนดเส้นทาง</h2>
+          <p class="text-xs text-[var(--text-muted)]">VLSM • IPv6 Basics (RFC 5952) • SLAAC • NDP • OSPF</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">L3 Hop-by-Hop</span>
+      </div>
+
+      <!-- 2.1 -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">2.1 IPv4 Addressing, Subnetting และ Packet Forwarding</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">VLSM Subnet Planning</strong>
+            <p>• คำนวณจาก: $2^h - 2 \ge \text{Hosts}$ (หัก 2 สำหรับ Network และ Broadcast)</p>
+            <p>• ความยาว Prefix: $/(32 - h)$ | ขนาดบล็อก: $2^h$</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">IPv4 Fragmentation</strong>
+            <p>• หัก IPv4 Header 20 ไบต์: $\text{Payload} = \lfloor (\text{MTU} - 20) / 8 \rfloor \times 8$ (ต้องหาร 8 ลงตัว)</p>
+            <p>• ชิ้นส่วนไม่สุดท้าย $\text{MF}=1$ | ชิ้นสุดท้าย $\text{MF}=0$</p>
+            <p>• $\text{Fragment Offset} = (\text{ไบต์สะสมก่อนหน้า}) / 8$</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1 md:col-span-2">
+            <strong class="text-[var(--text-main)] block">Longest Prefix Match (LPM Invariant) & AD</strong>
+            <p>• กฎ LPM: เราเตอร์เลือกเส้นทางที่มี Prefix ยาวที่สุดและเจาะจงที่สุดเสมอ (/25 ชนะ /24 ชนะ /0) โดย LPM อยู่เหนือ Metric และ AD ในขั้นตอน Forwarding จริง</p>
+            <p>• Administrative Distance (AD): ใช้ตัดสินว่าจะบันทึกเส้นทางจาก Routing Protocol ใดลง Routing Table เมื่อ Prefix ซ้ำกัน (Connected=0, Static=1, OSPF=110, RIP=120)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">2.2 สถาปัตยกรรม IPv6 และมาตรฐาน RFC</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">IPv6 Base Header & Chaining</strong>
+            <p>• ขนาดคงที่ 40 ไบต์เสมอ ไม่มี Header Checksum</p>
+            <p>• Extension Headers เชื่อมต่อผ่านฟิลด์ Next Header เราเตอร์ข้ามได้โดยไม่ต้องตรวจ (ยกเว้น Hop-by-Hop)</p>
+            <p>• <strong>ข้อห้าม: เราเตอร์ห้ามทำ Fragmentation เด็ดขาด</strong> หากเกิน MTU ให้ส่ง ICMPv6 Type 2 (Packet Too Big) กลับไปทำ PMTUD</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Address Scopes & การย่อรูป (RFC 5952)</strong>
+            <p>• Link-Local (<code class="px-1 rounded bg-[var(--code-bg)]">fe80::/10</code>): ใช้บนลิงก์เดียวกัน ไม่ข้ามเราเตอร์</p>
+            <p>• Anycast: ส่งหาโหนดที่ใกล้ที่สุดตาม Metric (ใช้ใน CDN / Root DNS)</p>
+            <p>• ตัด Broadcast ทิ้ง โดยแทนที่ด้วย Multicast (<code class="px-1 rounded bg-[var(--code-bg)]">ff00::/8</code>)</p>
+            <p>• ตัดเลข 0 ด้านหน้า Hextet ทิ้งได้ และใช้ <code class="px-1 rounded bg-[var(--code-bg)]">::</code> ย่อกลุ่ม 0 ต่อเนื่องยาวสุดได้เพียงครั้งเดียว</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">2.3 SLAAC, IEEE EUI-64, NDP และ Subnetting</h3>
+        <div class="space-y-2 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">SLAAC & Prefix /64 Boundary:</strong>
+            รับ Prefix 64 บิตจาก Router Advertisement (RA) มารวมกับ Interface ID (IID) 64 บิต หากผู้ดูแลแบ่งซับเน็ตเป็น /80 ระบบ SLAAC จะพังทันที
+          </div>
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">IEEE EUI-64 Interface Identifier:</strong>
+            (1) แทรก <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)]">FF:FE</code> ตรงกลาง MAC 48 บิต (2) กลับบิตที่ 7 ของไบต์แรกสุด (<code class="px-1 rounded bg-[var(--code-bg)]">00 ➔ 02</code>, <code class="px-1 rounded bg-[var(--code-bg)]">c0 ➔ c2</code>) เช่น <code class="px-1 rounded bg-[var(--code-bg)]">c0:c1:c2:c3:c4:c5 ➔ c2c1:c2ff:fec3:c4c5</code>
+          </div>
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">ICMPv6 Neighbor Discovery Protocol (NDP):</strong>
+            ส่ง Neighbor Solicitation (NS) ไปยัง Solicited-Node Multicast (<code class="px-1 rounded bg-[var(--code-bg)]">ff02::1:ffxx:xxxx</code>) แปลงเป็น L2 Multicast MAC (<code class="px-1 rounded bg-[var(--code-bg)]">33:33:ff:xx:xx:xx</code>) ให้ NIC คัดกรองทิ้งในระดับฮาร์ดแวร์ | แพ็กเก็ต DAD ใช้ Source IP เป็น <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)] font-mono">::</code>
+          </div>
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Subnetting /48 to /64 & Transition:</strong>
+            ได้ $2^{16} = 65,536$ ซับเน็ต (ลำดับที่ 75 = 0x4b ได้ <code class="px-1 rounded bg-[var(--code-bg)]">2001:db8:acad:4b::/64</code>) | กลไกเปลี่ยนผ่าน: Dual-Stack, Translation (NAT64/DNS64), Tunneling (6in4, 6to4, GRE)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: L1-L2 & LATENCY ==================== -->
+    <div id="content-l1l2" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">หมวดที่ 3: Data Link Layer, การทำงานของ Switch และงบประมาณเวลาหน่วง</h2>
+          <p class="text-xs text-[var(--text-muted)]">Collision & Broadcast Domains • MAC Table • Delay Budget • MSS</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">L1 – L2</span>
+      </div>
+
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">3.1 การทำงานของ Ethernet Switch และ ARP</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Hub (Layer 1)</strong>
+            1 Collision Domain รวมทุกพอร์ต และ 1 Broadcast Domain รวมทุกพอร์ต
+          </div>
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Switch (Layer 2)</strong>
+            แยก Collision Domain อิสระในแต่ละพอร์ต แต่ยังคงอยู่ใน 1 Broadcast Domain ต่อ 1 VLAN
+          </div>
+          <div class="subtle-box p-3 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Router (Layer 3)</strong>
+            ตัดและแบ่งแยกทั้ง Collision Domain และ Broadcast Domain ในทุกพอร์ต
+          </div>
+        </div>
+
+        <div class="subtle-box p-3 rounded-lg text-xs text-[var(--text-secondary)] space-y-1">
+          <strong class="text-[var(--text-main)] block">MAC Table & Header Rewriting:</strong>
+          <p>• สวิตช์เรียนรู้จาก Source MAC และ Ingress Port; หากทราบ Destination MAC จะส่งแบบ Selective Forwarding แต่หากไม่ทราบ (Unknown Unicast) จะทำ Flooding ออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา</p>
+          <p>• เมื่อเฟรมข้ามเราเตอร์: <strong>L2 MAC Header จะถูกเขียนใหม่ในทุกๆ Hop</strong> ขณะที่ <strong>L3 IP และ L4 Ports จะคงเดิมตลอด End-to-End</strong> (ค่า TTL ลดลง 1)</p>
+          <p>• RSTP (802.1w) บรรจบลิงก์ใหม่ได้ใน ~1 วินาที ทำให้เซสชัน TCP ไม่ขาดหาย</p>
+        </div>
+
+        <div class="overflow-x-auto pt-2">
+          <table class="w-full text-left text-xs border border-[var(--border)] rounded-lg overflow-hidden">
+            <thead class="subtle-box text-[var(--text-main)] font-semibold border-b border-[var(--border)]">
+              <tr>
+                <th class="p-2.5">ส่วนประกอบ</th>
+                <th class="p-2.5">ขนาด Header / MTU</th>
+                <th class="p-2.5">บทบาทสำคัญ</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[var(--border)] text-[var(--text-secondary)]">
+              <tr>
+                <td class="p-2.5 font-medium text-[var(--text-main)]">Ethernet (Layer 2)</td>
+                <td class="p-2.5 font-mono">14 ไบต์ (+ FCS 4 ไบต์)</td>
+                <td class="p-2.5">Src MAC (6B), Dst MAC (6B), Type (2B) ไม่นับเป็นส่วนของ MTU</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-medium text-[var(--text-main)]">IPv4 Header</td>
+                <td class="p-2.5 font-mono">20 ไบต์ (ขั้นต่ำ)</td>
+                <td class="p-2.5">ขยายได้สูงสุด 60 ไบต์หากมี Options</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-medium text-[var(--text-main)]">IPv6 Header</td>
+                <td class="p-2.5 font-mono">40 ไบต์ (คงที่)</td>
+                <td class="p-2.5">ขนาดตายตัว ไม่มี Header Checksum</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-medium text-[var(--text-main)]">TCP Header</td>
+                <td class="p-2.5 font-mono">20 ไบต์ (ขั้นต่ำ)</td>
+                <td class="p-2.5">ขยายได้เมื่อมี Options (เช่น Timestamps)</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-medium text-[var(--text-main)]">UDP Header</td>
+                <td class="p-2.5 font-mono">8 ไบต์ (คงที่)</td>
+                <td class="p-2.5">ประกอบด้วย 4 ฟิลด์ ฟิลด์ละ 2 ไบต์</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-medium text-[var(--text-main)]">Standard / Jumbo MTU</td>
+                <td class="p-2.5 font-mono">1,500 / 9,000 ไบต์</td>
+                <td class="p-2.5">Payload สูงสุดของเฟรม L2 (ไม่รวม L2 Header 14B)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="subtle-box p-3 rounded-lg text-xs space-y-1 text-[var(--text-secondary)] font-mono">
+          <strong class="text-[var(--text-main)] font-sans block">สูตรคำนวณ Latency Budget & MSS:</strong>
+          <p>• d_trans = L (bits) / R (bps) | d_prop = D (m) / v (m/s) [v ในใยแก้ว ≈ 2×10^8 m/s = 200 km/ms]</p>
+          <p>• IPv4 MSS = MTU - 40 | IPv6 MSS = MTU - 60 (Jumbo Frame MTU 9,000B: IPv4=8,960B, IPv6=8,940B)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: L7 APPLICATION ==================== -->
+    <div id="content-l7" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">หมวดที่ 4: Application Layer Protocols และสถาปัตยกรรมเว็บ</h2>
+          <p class="text-xs text-[var(--text-muted)]">DNS • HTTP/1.0–3 • FTP (RFC 959) • Telnet</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">L7 Application</span>
+      </div>
+
+      <!-- 4.1 DNS -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">4.1 Domain Name System (DNS)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Recursive vs Iterative</strong>
+            <p>• Recursive: ภาระอยู่ที่ Local Resolver ในการหาคำตอบจนได้ IP</p>
+            <p>• Iterative: เซิร์ฟเวอร์ตอบชี้แนะ (Referral / Next Name Server)</p>
+            <p>• ลำดับสืบค้น: Root (.) ➔ TLD (.th) ➔ Authoritative (wu.ac.th)</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Resource Records & กฎเหล็ก</strong>
+            <p>• A (IPv4), AAAA (IPv6), PTR (Reverse Lookup)</p>
+            <p>• <strong>CNAME Invariant:</strong> ชื่อใดมี CNAME ห้ามมีระเบียนอื่นซ้ำเด็ดขาด</p>
+            <p>• <strong>MX:</strong> เลข Preference ยิ่งน้อย ยิ่งสำคัญสูงสุด (5 สำคัญกว่า 10)</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1 md:col-span-2">
+            <strong class="text-[var(--text-main)] block">การสลับ UDP vs TCP พอร์ต 53:</strong>
+            ปกติใช้ UDP 53 แต่สลับไปใช้ TCP 53 เมื่อ: (1) มีการทำ Zone Transfer (AXFR/IXFR) หรือ (2) คำตอบมีขนาดเกิน 512 ไบต์ โดยเซิร์ฟเวอร์ตั้งแฟล็ก <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)]">TC (Truncated)</code> ให้ถามใหม่ทาง TCP
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.2 HTTP -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">4.2 Hypertext Transfer Protocol (HTTP)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">วิวัฒนาการ HTTP</strong>
+            <p>• HTTP/1.0: Non-persistent ปิด TCP ทุกไฟล์ เสียเวลา $(1+N) \times 2\text{ RTT}$</p>
+            <p>• HTTP/1.1: Persistent ใช้ TCP Handshake ร่วมกัน (Pipelined ใช้ $3\text{ RTT}$)</p>
+            <p>• HTTP/2: Multiplexing บน TCP เดียว (ยังติดปัญหา TCP HoL Blocking)</p>
+            <p>• HTTP/3: QUIC บน UDP แยกการกู้คืนสตรีมเป็นอิสระ</p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Conditional Caching & Idempotency</strong>
+            <p>• คำขอ <code class="px-1 rounded bg-[var(--code-bg)]">If-None-Match: "ETag"</code> ตอบ <code class="px-1 rounded bg-[var(--code-bg)]">304 Not Modified</code> โดยมี <strong>Body Size = 0 ไบต์</strong></p>
+            <p>• <strong>Idempotent Methods:</strong> <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)] font-mono">GET, HEAD, PUT, DELETE</code></p>
+            <p>• <strong>Non-Idempotent:</strong> <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)] font-mono">POST</code> (เรียกซ้ำอาจเกิดข้อมูลซ้ำซ้อน)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.3 FTP & Telnet -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">4.3 FTP (RFC 959) และ Telnet</h3>
+        <div class="space-y-2 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">FTP Dual-Channel & Active vs Passive:</strong>
+            <p>• Control Connection (TCP 21) สำหรับส่งคำสั่ง (Out-of-band เช่น ABOR) และ Data Connection ส่งไฟล์จริง</p>
+            <p>• Active Mode (Server Inbound มักถูกไฟร์วอลล์บล็อก) vs Passive Mode (Client Outbound ทะลุไฟร์วอลล์ได้)</p>
+            <p>• <strong>สูตรคำนวณหมายเลข Data Port:</strong> จากรหัส 227 (..., p1, p2) ➔ <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)] font-mono font-semibold">Data Port = (p1 × 256) + p2</code></p>
+          </div>
+          <div class="subtle-box p-3 rounded-lg space-y-1">
+            <strong class="text-[var(--text-main)] block">Telnet vs SSH & Control Commands:</strong>
+            <p>• Telnet (TCP 23) วิ่งเป็น Plaintext ไม่เข้ารหัสใน TCP Payload ต่างจาก SSH (TCP 22) ที่เข้ารหัสแบบ End-to-End</p>
+            <p>• รหัสไบต์ 255 (0xFF) คือ IAC (Interpret As Command) | คำสั่ง WILL (เปิดใช้เอง) vs DO (ขอให้อีกฝ่ายเปิด)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 5: L5 STRATEGY & HAND CALC (NEW DEDICATED TAB) ==================== -->
+    <div id="content-l5" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">หมวดที่ 5: ยุทธศาสตร์การทำข้อสอบและการคำนวณด้วยมือ</h2>
+          <p class="text-xs text-[var(--text-muted)]">Exam Strategy & Hand Calculations • การบริหารเวลา • เทคนิคตัดเลข • การแปลงฐานเลข • เช็กลิสต์หน่วย</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">Module 5</span>
+      </div>
+
+      <!-- 5.1 Time Management -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">5.1 การบริหารเวลาสอบ (120 นาที / 60 ข้อ)</h3>
+        <p class="text-xs text-[var(--text-secondary)]">จัดสรรเวลาเป็น 3 ช่วงอย่างมีวินัย เพื่อทำข้อสอบได้ครบถ้วนและไม่ติดหล่มกับข้อคำนวณ:</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div class="subtle-box p-3.5 rounded-lg space-y-1.5">
+            <div class="flex justify-between items-center">
+              <strong class="text-[var(--text-main)]">ช่วงที่ 1: Part 1 ปรนัย 40 ข้อ</strong>
+              <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-[var(--bg-surface)]">นาทีที่ 0 – 40</span>
+            </div>
+            <p class="text-[var(--text-secondary)] leading-relaxed">
+              ใช้เวลา <strong>ไม่เกิน 1 นาทีต่อข้อ</strong> โดยอ่านจับใจความ Fact ที่โจทย์กำหนดให้เพื่อช่วยตัดตัวเลือกที่ไม่ถูกต้องทิ้งอย่างรวดเร็ว (เช่น ขอบเขต Scope, หมายเลขพอร์ต, กฎ Checksum, กฎ CNAME) หากข้อใดไม่มั่นใจให้ข้ามไปก่อนเพื่อรักษาความเร็ว
+            </p>
+          </div>
+
+          <div class="subtle-box p-3.5 rounded-lg space-y-1.5">
+            <div class="flex justify-between items-center">
+              <strong class="text-[var(--text-main)]">ช่วงที่ 2: Part 2 คำนวณ 10 ข้อ</strong>
+              <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-[var(--bg-surface)]">นาทีที่ 40 – 80</span>
+            </div>
+            <p class="text-[var(--text-secondary)] leading-relaxed">
+              ใช้เวลา <strong>ข้อละประมาณ 4 นาที</strong> เขียนแสดงสูตรหลักและขั้นตอนการทดเลขอย่างเป็นระเบียบชัดเจน ตรวจสอบตัวเลขที่ตัดทอนได้ และระบุหน่วยวิศวกรรมกำกับตัวเลขทุกครั้ง
+            </p>
+          </div>
+
+          <div class="subtle-box p-3.5 rounded-lg space-y-1.5">
+            <div class="flex justify-between items-center">
+              <strong class="text-[var(--text-main)]">ช่วงที่ 3: Part 3 แกะรอย 10 ข้อ</strong>
+              <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-[var(--bg-surface)]">นาทีที่ 80 – 120</span>
+            </div>
+            <p class="text-[var(--text-secondary)] leading-relaxed">
+              ใช้เวลา <strong>ข้อละประมาณ 4 นาที</strong> ตรวจสอบ Flag, การแปลง Offset, TCP State Transitions, Routing Table LPM และเติมตารางระบุคำตอบให้ตรงประเด็น
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.2 Hand Calculation Technique -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">5.2 เทคนิคการตัดทอนตัวเลขด้วยมือ (No Calculator Strategy)</h3>
+        <div class="space-y-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3.5 rounded-lg space-y-2">
+            <strong class="text-[var(--text-main)] block">1. การคูณแบนด์วิดท์กับเวลา RTT (BDP & Buffer Calculation):</strong>
+            <p class="leading-relaxed">
+              ฝึกจัดกลุ่มเลขยกกำลังฐานสิบและฐานสอง โดยแปลงหน่วยมิลลิวินาที (ms) เป็นวินาที ($\text{ms} = 10^{-3}\text{ s}$) ก่อนนำไปตัดกับแบนด์วิดท์ Mbps ($10^6\text{ bps}$):
+            </p>
+            <div class="p-2.5 rounded bg-[var(--bg-surface)] border border-[var(--border)] font-mono text-[var(--text-main)] space-y-1">
+              <div>ตัวอย่างโจทย์: Bandwidth = 50 Mbps, RTT = 20 ms</div>
+              <div>BDP (bits) = (50 × 10⁶ bps) × (20 × 10⁻³ s) = 50 × 20 × 10³ = 1,000,000 บิต</div>
+              <div>แปลงเป็นไบต์ (Buffer_min): 1,000,000 / 8 = <strong>125,000 ไบต์</strong></div>
+            </div>
+          </div>
+
+          <div class="subtle-box p-3.5 rounded-lg space-y-2">
+            <strong class="text-[var(--text-main)] block">2. การคำนวณ Propagation Delay ในสายใยแก้วนำแสง:</strong>
+            <p class="leading-relaxed">
+              ใช้ค่าคงที่ความเร็วคลื่นแสงในตัวกลางใยแก้ว: $v \approx 2 \times 10^8\text{ m/s} = 200,000\text{ km/s} = 200\text{ km/ms}$ (หรือ $200\text{ m/}\mu\text{s}$) แทนค่าตัดตัวเลขได้ทันที:
+            </p>
+            <div class="p-2.5 rounded bg-[var(--bg-surface)] border border-[var(--border)] font-mono text-[var(--text-main)] space-y-1">
+              <div>ตัวอย่างโจทย์: ระยะทางสายไฟเบอร์ D = 1,000 km</div>
+              <div>d_prop = Distance / Velocity = 1,000 km / (200 km/ms) = <strong>5 ms</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.3 Base Conversion -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">5.3 การแปลงเลขฐานสองและฐานสิบหก (Base Conversion Shortcuts)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-3.5 rounded-lg space-y-2">
+            <strong class="text-[var(--text-main)] block">การแปลงดัชนีซับเน็ต IPv6 (Decimal ➔ Hexadecimal):</strong>
+            <p class="leading-relaxed">
+              แยกตัวเลขฐานสิบออกเป็นผลบวกของค่าประจำหลักฐานสิบหก ($16^1 = 16, 16^0 = 1$):
+            </p>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)] font-mono text-[var(--text-main)]">
+              ลำดับที่ 75₁₀:<br>
+              75 ÷ 16 = 4 เศษ 11<br>
+              4₁₀ = 4₁₆, 11₁₀ = B₁₆ ➔ <strong>75₁₀ = 0x4B</strong><br>
+              ได้แอดเดรส: 2001:db8:acad:4b::/64
+            </div>
+          </div>
+
+          <div class="subtle-box p-3.5 rounded-lg space-y-2">
+            <strong class="text-[var(--text-main)] block">การกลับบิตที่ 7 ของไบต์แรกใน EUI-64 (U/L Bit):</strong>
+            <p class="leading-relaxed">
+              กระจายเฉพาะไบต์แรกสุดของ MAC Address เป็นเลขฐานสอง 8 บิต แล้วกลับบิตที่ 7 (นับจากซ้าย):
+            </p>
+            <div class="p-2 rounded bg-[var(--bg-surface)] border border-[var(--border)] font-mono text-[var(--text-main)] space-y-1">
+              <div>ค่า 00₁₆ = 0000 00<strong>0</strong>0₂ ➔ 0000 00<strong>1</strong>0₂ = <strong>02₁₆</strong></div>
+              <div>ค่า c0₁₆ = 1100 00<strong>0</strong>0₂ ➔ 1100 00<strong>1</strong>0₂ = <strong>c2₁₆</strong></div>
+              <div>ค่า 08₁₆ = 0000 10<strong>0</strong>0₂ ➔ 0000 10<strong>1</strong>0₂ = <strong>0a₁₆</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.4 Engineering Units -->
+      <div class="surface-card rounded-xl p-5 space-y-3">
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-[var(--text-muted)]">5.4 ความเคร่งครัดเรื่องหน่วยวิศวกรรม (Engineering Units Checklist)</h3>
+        <p class="text-xs text-[var(--text-secondary)]">
+          ใน Part 2 (คำนวณ) และ Part 3 (แกะรอย) <strong>ห้ามเขียนคำตอบเป็นตัวเลขลอยๆ โดยเด็ดขาด</strong> การไม่ระบุหน่วยหรือระบุหน่วยผิดประเภทจะถูกหักคะแนน:
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-[var(--text-secondary)]">
+          <div class="subtle-box p-2.5 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Latency / Time</strong>
+            <code class="text-[11px] font-mono text-[var(--text-main)]">s, ms, μs</code>
+          </div>
+          <div class="subtle-box p-2.5 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Bandwidth</strong>
+            <code class="text-[11px] font-mono text-[var(--text-main)]">bps, Kbps, Mbps</code>
+          </div>
+          <div class="subtle-box p-2.5 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Buffer / BDP</strong>
+            <code class="text-[11px] font-mono text-[var(--text-main)]">bits, Bytes</code>
+          </div>
+          <div class="subtle-box p-2.5 rounded-lg">
+            <strong class="text-[var(--text-main)] block">Fragment Offset</strong>
+            <code class="text-[11px] font-mono text-[var(--text-main)]">8-byte units</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 6: TRICKS & TRAPS ==================== -->
+    <div id="content-tricks" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">15 ทริคพิชิตข้อสอบ & จุดดักคะแนนยอดฮิต (Exam Traps)</h2>
+          <p class="text-xs text-[var(--text-muted)]">สรุปจุดที่นักศึกษามักจำสับสนและจุดที่ข้อสอบชอบนำมาหลอก</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">Top Pitfalls</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">1. UDP Checksum ใน IPv6</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L4/L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">ใน IPv4 เป็น Optional (ตั้งเป็น 0 ได้) แต่ใน <strong>IPv6 ถูกบังคับเป็น Mandatory อย่างเด็ดขาด</strong> หากพบ Checksum เป็น 0 ใน IPv6 แพ็กเก็ตจะถูกทิ้งทันที</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">2. SWS Clark vs Nagle</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L4</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed"><strong>Clark's Solution ทำงานที่ฝั่งรับ (Receiver)</strong> เพื่อกักการโฆษณา Window ส่วน <strong>Nagle's Algorithm ทำงานที่ฝั่งส่ง (Sender)</strong> เพื่อกักแพ็กเก็ตเล็ก</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">3. SLAAC Subnet /64 Boundary</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">สถาปัตยกรรม SLAAC บังคับใช้ Prefix สำหรับ Subnet ขนาด <strong>/64 เท่านั้น</strong> หากโจทย์หลอกว่าแบ่งซับเน็ตเป็น /80 คำตอบคือ <strong>SLAAC จะล้มเหลวทันที</strong></p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">4. LPM ชนะทุกสิ่งในการ Forwarding</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">เมื่อแพ็กเก็ตมาถึงเราเตอร์ กฎ <strong>Longest Prefix Match (LPM)</strong> (/25 ชนะ /24 ชนะ /0) จะตัดสินก่อนเสมอ ไม่ว่าเส้นทางนั้นจะมี Metric หรือ AD ใด</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">5. การกลับบิตที่ 7 ใน EUI-64</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">สูตรลัดเลขฐานสิบหกไบต์แรก: <code class="px-1 rounded bg-[var(--code-bg)]">00 ➔ 02</code>, <code class="px-1 rounded bg-[var(--code-bg)]">c0 ➔ c2</code>, <code class="px-1 rounded bg-[var(--code-bg)]">08 ➔ 0a</code> (กลับเฉพาะบิตที่ 7 นับจากซ้าย)</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">6. การคำนวณ FTP Passive Port</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L7</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">จากรหัส 227 (..., p1, p2): สูตรคือ <strong>(p1 × 256) + p2</strong> ห้ามสลับตัวแปรและห้ามคูณด้วย 255</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">7. CNAME Exclusivity Rule</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L7</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">โดเมนใดที่มีระเบียน CNAME แล้ว <strong>ห้ามมีระเบียน A, AAAA, หรือ MX ในชื่อเดียวกันซ้ำเด็ดขาด</strong></p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">8. DNS MX Preference Number</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L7</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">สำหรับระเบียน MX <strong>ค่าตัวเลขยิ่งน้อย ยิ่งมีความสำคัญสูงสุด</strong> (Preference 5 มาก่อน Preference 10)</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">9. Fragment Offset ต้องหาร 8</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">ค่า Fragment Offset ใน Header มีหน่วยเป็น <strong>บล็อก 8 ไบต์</strong> ดังนั้นขนาดข้อมูลแต่ละชิ้น (ยกเว้นชิ้นสุดท้าย) ต้องหาร 8 ลงตัวเสมอ</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">10. TCP MSS หัก Header ต่างกัน</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L4/L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">ใน <strong>IPv4: MSS = MTU - 40</strong> (IP 20 + TCP 20) แต่ใน <strong>IPv6: MSS = MTU - 60</strong> (IPv6 40 + TCP 20)</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">11. ความเร็วแสงในใยแก้วนำแสง</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L1</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">ความเร็วคลื่นในสายใยแก้วคือ <strong>$v \approx 2 \times 10^8\text{ m/s} = 200\text{ km/ms}$</strong> ไม่ใช่ $3 \times 10^8$ m/s</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">12. Source IP ในแพ็กเก็ต DAD</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">แพ็กเก็ต Neighbor Solicitation ที่ส่งเพื่อทำ Duplicate Address Detection (DAD) ต้องใช้ Source IP เป็น <code class="px-1 rounded bg-[var(--code-bg)] text-[var(--text-main)] font-mono">::</code> (Unspecified)</p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">13. HTTP 304 Body Size</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L7</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">เมื่อเซิร์ฟเวอร์ตอบกลับด้วย 304 Not Modified <strong>ขนาดของ HTTP Body Payload จะเป็น 0 ไบต์เสมอ</strong></p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">14. ข้ามเราเตอร์ L2 เปลี่ยน L3/L4 คงเดิม</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L2/L3</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">เมื่อแพ็กเก็ตข้ามเราเตอร์: <strong>Src/Dst MAC ถูกเขียนใหม่ทุก Hop</strong> ส่วน <strong>Src/Dst IP และ Port จะคงที่ตลอด End-to-End</strong></p>
+        </div>
+
+        <div class="surface-card rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between items-center">
+            <strong class="text-[var(--text-main)]">15. Fast Recovery Exit cwnd Value</strong>
+            <span class="text-[11px] px-1.5 py-0.5 rounded subtle-box text-[var(--text-muted)] font-mono">L4</span>
+          </div>
+          <p class="text-[var(--text-secondary)] leading-relaxed">เมื่ออยู่ใน Fast Recovery แล้วได้รับ New Cumulative ACK ค่า cwnd จะ<strong>ยุบตัวกลับลงมาเท่ากับ $ssthresh$</strong> ทันที</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 7: QUIZ SET 1 ==================== -->
+    <div id="content-quiz1" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">ข้อสอบจำลองชุดที่ 1: Conceptual & Analytical (10 ข้อ)</h2>
+          <p class="text-xs text-[var(--text-muted)]">แบบฝึกหัดเสมือนจริง พร้อมระบบตรวจคะแนนและเฉลยละเอียด</p>
+        </div>
+        <div class="text-xs subtle-box px-3 py-1 rounded-lg font-mono text-[var(--text-secondary)]">
+          คะแนน: <span id="score-val-1" class="font-bold text-[var(--text-main)]">0</span> / 10
+        </div>
+      </div>
+
+      <form id="quiz-form-1" class="space-y-4" onsubmit="event.preventDefault(); gradeQuiz(1);">
+        <div id="quiz1-container" class="space-y-3"></div>
+
+        <div class="flex items-center gap-2 pt-3">
+          <button type="submit" class="bg-[var(--accent)] text-[var(--accent-text)] font-semibold px-5 py-2 rounded-lg transition text-xs hover:opacity-90">
+            ตรวจคำตอบชุดที่ 1
+          </button>
+          <button type="button" onclick="resetQuiz(1)" class="subtle-box px-4 py-2 rounded-lg transition text-xs text-[var(--text-secondary)] hover:text-[var(--text-main)]">
+            รีเซ็ตทำใหม่
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ==================== TAB 8: QUIZ SET 2 ==================== -->
+    <div id="content-quiz2" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">ข้อสอบจำลองชุดที่ 2: Diagnostic & Tracing (10 ข้อ)</h2>
+          <p class="text-xs text-[var(--text-muted)]">เน้นการคำนวณทางวิศวกรรม, Packet Tracing และการวิเคราะห์ Routing Table</p>
+        </div>
+        <div class="text-xs subtle-box px-3 py-1 rounded-lg font-mono text-[var(--text-secondary)]">
+          คะแนน: <span id="score-val-2" class="font-bold text-[var(--text-main)]">0</span> / 10
+        </div>
+      </div>
+
+      <form id="quiz-form-2" class="space-y-4" onsubmit="event.preventDefault(); gradeQuiz(2);">
+        <div id="quiz2-container" class="space-y-3"></div>
+
+        <div class="flex items-center gap-2 pt-3">
+          <button type="submit" class="bg-[var(--accent)] text-[var(--accent-text)] font-semibold px-5 py-2 rounded-lg transition text-xs hover:opacity-90">
+            ตรวจคำตอบชุดที่ 2
+          </button>
+          <button type="button" onclick="resetQuiz(2)" class="subtle-box px-4 py-2 rounded-lg transition text-xs text-[var(--text-secondary)] hover:text-[var(--text-main)]">
+            รีเซ็ตทำใหม่
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ==================== TAB 9: CALCULATORS ==================== -->
+    <div id="content-calc" class="hidden space-y-5">
+      <div class="border-b border-[var(--border)] pb-2 flex justify-between items-center">
+        <div>
+          <h2 class="text-base font-bold text-[var(--text-main)]">Lab คำนวณอัตโนมัติ (Engineering Calculators)</h2>
+          <p class="text-xs text-[var(--text-muted)]">เครื่องมือทดสอบคำนวณและตรวจคำตอบด้วยตนเองแบบทีละสเต็ป</p>
+        </div>
+        <span class="text-xs font-mono px-2 py-0.5 rounded subtle-box text-[var(--text-secondary)]">Hand-Calc Verifier</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <!-- Calc 1: BDP -->
+        <div class="surface-card rounded-xl p-4 space-y-2.5">
+          <strong class="text-[var(--text-main)] text-xs block">1. Bandwidth-Delay Product (BDP)</strong>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[var(--text-muted)] block mb-1">Bandwidth (Mbps):</label>
+              <input type="number" id="bdp-bw" value="50" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+            </div>
+            <div>
+              <label class="text-[var(--text-muted)] block mb-1">RTT (ms):</label>
+              <input type="number" id="bdp-rtt" value="20" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+            </div>
+          </div>
+          <button onclick="calculateBDP()" class="w-full subtle-box hover:bg-[var(--bg-subtle)] text-[var(--text-main)] font-medium py-1.5 rounded transition">คำนวณ BDP</button>
+          <div id="bdp-res" class="subtle-box p-2.5 rounded text-[var(--text-secondary)] font-mono">
+            กำลังโหลด...
+          </div>
+        </div>
+
+        <!-- Calc 2: FTP Port -->
+        <div class="surface-card rounded-xl p-4 space-y-2.5">
+          <strong class="text-[var(--text-main)] text-xs block">2. FTP 227 Passive Port Calculator</strong>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[var(--text-muted)] block mb-1">p1 (ไบต์สูง):</label>
+              <input type="number" id="ftp-p1" value="195" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+            </div>
+            <div>
+              <label class="text-[var(--text-muted)] block mb-1">p2 (ไบต์ต่ำ):</label>
+              <input type="number" id="ftp-p2" value="113" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+            </div>
+          </div>
+          <button onclick="calculateFTPPort()" class="w-full subtle-box hover:bg-[var(--bg-subtle)] text-[var(--text-main)] font-medium py-1.5 rounded transition">คำนวณหมายเลข Data Port</button>
+          <div id="ftp-res" class="subtle-box p-2.5 rounded text-[var(--text-secondary)] font-mono">
+            กำลังโหลด...
+          </div>
+        </div>
+
+        <!-- Calc 3: MSS -->
+        <div class="surface-card rounded-xl p-4 space-y-2.5">
+          <strong class="text-[var(--text-main)] text-xs block">3. TCP MSS Derivation</strong>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[var(--text-muted)] block mb-1">Link MTU (Bytes):</label>
+              <input type="number" id="mss-mtu" value="1500" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+            </div>
+            <div>
+              <label class="text-[var(--text-muted)] block mb-1">IP Version:</label>
+              <select id="mss-ipver" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+                <option value="ipv4">IPv4 (IP Header 20B)</option>
+                <option value="ipv6">IPv6 (IP Header 40B)</option>
+              </select>
+            </div>
+          </div>
+          <button onclick="calculateMSS()" class="w-full subtle-box hover:bg-[var(--bg-subtle)] text-[var(--text-main)] font-medium py-1.5 rounded transition">คำนวณ MSS</button>
+          <div id="mss-res" class="subtle-box p-2.5 rounded text-[var(--text-secondary)] font-mono">
+            กำลังโหลด...
+          </div>
+        </div>
+
+        <!-- Calc 4: EUI-64 -->
+        <div class="surface-card rounded-xl p-4 space-y-2.5">
+          <strong class="text-[var(--text-main)] text-xs block">4. EUI-64 Interface ID Generator</strong>
+          <div>
+            <label class="text-[var(--text-muted)] block mb-1">48-bit MAC Address (เช่น c0:c1:c2:c3:c4:c5):</label>
+            <input type="text" id="eui-mac" value="c0:c1:c2:c3:c4:c5" class="w-full bg-[var(--bg-input)] border border-[var(--border)] rounded p-1.5 text-[var(--text-main)] font-mono">
+          </div>
+          <button onclick="calculateEUI64()" class="w-full subtle-box hover:bg-[var(--bg-subtle)] text-[var(--text-main)] font-medium py-1.5 rounded transition">แปลงเป็น EUI-64</button>
+          <div id="eui-res" class="subtle-box p-2.5 rounded text-[var(--text-secondary)] font-mono">
+            กำลังโหลด...
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark');
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (isDark) {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        icon.textContent = '🌙';
+        if (text) text.textContent = 'โหมดมืด';
+      } else {
+        html.classList.remove('light');
+        html.classList.add('dark');
+        icon.textContent = '☀️';
+        if (text) text.textContent = 'โหมดสว่าง';
+      }
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['overview', 'l4', 'l3', 'l1l2', 'l7', 'l5', 'tricks', 'quiz1', 'quiz2', 'calc'];
+      tabs.forEach(t => {
+        const content = document.getElementById('content-' + t);
+        const btn = document.getElementById('tab-' + t);
+        if (content) content.classList.add('hidden');
+        if (btn) btn.classList.remove('active');
+      });
+      const activeContent = document.getElementById('content-' + tabId);
+      const activeBtn = document.getElementById('tab-' + tabId);
+      if (activeContent) activeContent.classList.remove('hidden');
+      if (activeBtn) activeBtn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const quiz1Data = [
+      {
+        id: 1,
+        question: "ข้อใดอธิบายกฎของ UDP Checksum ใน IPv6 ได้ถูกต้องตามมาตรฐาน RFC?",
+        options: [
+          "เป็นทางเลือก (Optional) สามารถตั้งค่าเป็น 0 ทั้งหมดได้เหมือนใน IPv4",
+          "เป็นภาคบังคับ (Mandatory) หากคำนวณแล้วได้ 0 ทั้งหมด จะต้องแปลงค่าเป็น 0xFFFF และหากได้รับค่า 0 จะถือว่าแพ็กเก็ตผิดพลาดและถูกทิ้งทันที",
+          "ถูกตัดออกจาก UDP Header เนื่องจาก IPv6 Base Header มี Header Checksum ตรวจสอบให้อยู่แล้ว",
+          "จะถูกคำนวณเฉพาะเมื่อส่งข้อมูลข้ามเครือข่ายอินเทอร์เน็ตสาธารณะเท่านั้น"
+        ],
+        answer: 1,
+        explain: "ใน IPv6 โครงสร้าง Base Header ได้ตัด Header Checksum ออกเพื่อเพิ่มประสิทธิภาพของเราเตอร์ ดังนั้น UDP Checksum ใน Layer 4 จึงถูกบังคับเป็นภาคบังคับ (Mandatory) อย่างเด็ดขาด หากรับแพ็กเก็ตที่มี UDP Checksum เป็น 0 จะถูก Drop ทิ้งทันที"
+      },
+      {
+        id: 2,
+        question: "เหตุใดในกระบวนการ TCP 3-Way Handshake ทั้งสองฝั่งจึงต้องสุ่มเลือก Initial Sequence Number (ISN) แทนที่จะเริ่มต้นที่ 0 เสมอ?",
+        options: [
+          "เพื่อประหยัดพลังงานในการประมวลผลของ CPU ในช่วงเริ่มต้นการเชื่อมต่อ",
+          "เพื่อป้องกันไม่ให้แพ็กเก็ตตกค้าง (Delayed Duplicate Segments) จากเซสชันเก่าที่ปิดไปแล้ว ข้ามมารบกวนและทำให้ข้อมูลในเซสชันใหม่ผิดพลาด",
+          "เพื่อความเข้ากันได้กับโปรโตคอล UDP ที่สุ่มพอร์ตต้นทาง",
+          "เพื่อใช้ในการคำนวณหาค่า RTT และค่า Checksum ใน Header"
+        ],
+        answer: 1,
+        explain: "หาก ISN เริ่มต้นที่ 0 เสมอ แพ็กเก็ตเดิมที่หลงทางอยู่ในโครงข่าย (Delayed Duplicates) จากเซสชันก่อนหน้าที่มี Socket Pair เดียวกัน อาจเดินทางมาถึงเซสชันใหม่ที่มีหมายเลข Sequence Number ซ้ำกันพอดี ส่งผลให้ข้อมูลเสียหายได้ การสุ่ม ISN ช่วยป้องกันปัญหานี้"
+      },
+      {
+        id: 3,
+        question: "ในการปิดการเชื่อมต่อ TCP (4-Way Teardown) เหตุใดโฮสต์ฝั่งที่ทำ Active Close จึงต้องคงอยู่ในสถานะ TIME_WAIT เป็นระยะเวลา 2MSL (~120 วินาที)?",
+        options: [
+          "เพื่อให้แน่ใจว่าบัฟเฟอร์การส่งของตนเองถูกลบออกจากหน่วยความจำอย่างถาวร",
+          "เพื่อรอให้เซิร์ฟเวอร์ส่งคำขอเปิดการเชื่อมต่อใหม่อีกครั้ง",
+          "เพื่อให้มั่นใจว่า ACK สุดท้ายส่งถึงปลายทาง (หากหายจะส่งซ้ำได้) และปล่อยให้ Segment เก่าทั้งหมดสลายตัวจนหมดสิ้นจากเครือข่าย",
+          "เพื่อป้องกันการเกิดสภาวะ Silly Window Syndrome ที่ฝั่งส่ง"
+        ],
+        answer: 2,
+        explain: "สถานะ TIME_WAIT (2MSL) มีหน้าที่หลัก 2 ประการ: (1) รับประกันว่า ACK ใบสุดท้ายจะส่งถึงอีกฝั่งอย่างแน่นอน หากหาย ฝั่งตรงข้ามจะส่ง FIN มาใหม่และฝั่งใน TIME_WAIT จะส่ง ACK ซ้ำได้ และ (2) ปล่อยให้ Segment เก่าทั้งหมดสลายตัวจนหมดสิ้น ไม่ให้ตกค้างไปกวนเซสชันถัดไป"
+      },
+      {
+        id: 4,
+        question: "กลไก Clark's Solution ทำงานที่ฝั่งใด และมีบทบาทอย่างไรในการแก้ปัญหา Silly Window Syndrome (SWS)?",
+        options: [
+          "ทำงานที่ฝั่งส่ง (Sender) โดยกักข้อมูลขนาดเล็กไว้จนกว่าจะได้รับ ACK",
+          "ทำงานที่ฝั่งรับ (Receiver) โดยระงับการโฆษณา Window Update ไว้จนกว่าจะมีที่ว่างอย่างน้อย 1 MSS เต็ม หรือครึ่งหนึ่งของขนาดบัฟเฟอร์ทั้งหมด",
+          "ทำงานที่เราเตอร์รายทาง โดยทิ้งแพ็กเก็ตที่มีขนาดเล็กกว่า 64 ไบต์",
+          "ทำงานที่ฝั่งส่ง โดยปรับลดค่า cwnd ลงเหลือครึ่งหนึ่งของ FlightSize"
+        ],
+        answer: 1,
+        explain: "Clark's Solution ทำงานที่ฝั่งรับ (Receiver) แก้ปัญหาที่แอปพลิเคชันบริโภคข้อมูลช้า โดยฝั่งรับจะไม่ส่งสัญญาณโฆษณาเพิ่มขนาด Window Update จนกว่าจะมีที่ว่างอย่างน้อย 1 MSS เต็ม หรือครึ่งหนึ่งของพื้นที่บัฟเฟอร์ทั้งหมด (Buffer_Total / 2)"
+      },
+      {
+        id: 5,
+        question: "ตามมาตรฐาน RFC 5681 เมื่อ TCP ตรวจพบการสูญหายของแพ็กเก็ตผ่าน 3 Duplicate ACKs ในระยะ Congestion Avoidance เหตุการณ์ใดจะเกิดขึ้นตามลำดับ?",
+        options: [
+          "ปรับ ssthresh = FlightSize / 2, ตั้ง cwnd = 1 MSS แล้วกลับไปเริ่ม Slow Start ใหม่",
+          "ส่งแพ็กเก็ตซ้ำทันที (Fast Retransmit), ตั้ง ssthresh = FlightSize / 2, เข้าสู่ Fast Recovery ด้วย cwnd = ssthresh + 3 MSS, และเมื่อได้รับ New ACK ค่า cwnd จะยุบกลับลงมาที่ ssthresh",
+          "ส่งแพ็กเก็ตที่มีแฟล็ก RST เพื่อยกเลิกการเชื่อมต่อทันที",
+          "เพิ่มค่า cwnd ขึ้นเป็น 2 เท่าเนื่องจากเครือข่ายมีแบนด์วิดท์เพียงพอ"
+        ],
+        answer: 1,
+        explain: "การตรวจพบ 3 Duplicate ACKs แสดงว่ามีแพ็กเก็ตหลุดรอดไปถึงฝั่งรับได้บางส่วน TCP จึงใช้ Fast Retransmit ส่งชิ้นที่หายทันที ไม่ต้องรอ RTO Timer โดยปรับ ssthresh = FlightSize/2 และทำ Fast Recovery ด้วย cwnd = ssthresh + 3 MSS และเมื่อได้รับ New ACK ค่า cwnd จะยุบลงมาที่ ssthresh"
+      },
+      {
+        id: 6,
+        question: "เราเตอร์มีตาราง Routing ดังนี้: เส้นทาง A: 192.168.1.0/24 (OSPF, Metric 20), เส้นทาง B: 192.168.1.128/25 (RIP, Metric 3), เส้นทาง C: 0.0.0.0/0 (Static, AD 1) เมื่อมีแพ็กเก็ตปลายทาง 192.168.1.130 เข้ามา เราเตอร์จะส่งต่อไปยังเส้นทางใด?",
+        options: [
+          "เส้นทาง C เพราะมีค่า Administrative Distance (AD) ต่ำที่สุด",
+          "เส้นทาง B เพราะตรงกับ Prefix และมีความยาวของ Prefix ยาวที่สุด (/25 ชนะ /24 ตามกฎ Longest Prefix Match)",
+          "เส้นทาง A เพราะโปรโตคอล OSPF มีความน่าเชื่อถือมากกว่า RIP",
+          "แพ็กเก็ตจะถูกทิ้งเนื่องจากเกิดความขัดแย้งของ Routing Protocol"
+        ],
+        answer: 1,
+        explain: "ตามกฎเหล็ก Longest Prefix Match (LPM Invariant) เมื่อแพ็กเก็ตตรงกับหลายเส้นทางใน Routing Table เส้นทางที่มี Prefix ยาวที่สุดและเจาะจงที่สุด (/25 ชนะ /24 ชนะ /0) จะได้รับเลือกส่งต่อเสมอ กฎ LPM อยู่เหนือค่า Metric และ AD ในขั้นตอนการ Forwarding จริง"
+      },
+      {
+        id: 7,
+        question: "หากผู้ดูแลระบบกำหนดขนาดซับเน็ต IPv6 ให้กับ LAN โฮสต์เป็น /80 จะเกิดผลกระทบใดต่อระบบ Stateless Address Autoconfiguration (SLAAC)?",
+        options: [
+          "ระบบ SLAAC ทำงานได้เร็วขึ้นเนื่องจากพื้นที่ค้นหา Interface ID เล็กลง",
+          "ระบบ SLAAC จะล้มเหลวโดยสมบูรณ์ เนื่องจากสถาปัตยกรรม IPv6 กำหนดขอบเขต Interface ID สำหรับ SLAAC ไว้ที่ 64 บิต (/64 boundary) เสมอ",
+          "โฮสต์จะสลับไปใช้ EUI-64 ขนาด 16 บิตแทนโดยอัตโนมัติ",
+          "เราเตอร์จะทำการแปลงแอดเดรสเป็น Dual-Stack โดยอัตโนมัติ"
+        ],
+        answer: 1,
+        explain: "มาตรฐานสถาปัตยกรรมที่อยู่ IPv6 กำหนดให้การสร้าง Interface ID อัตโนมัติ (เช่น EUI-64 หรือสุ่ม) มีขนาด 64 บิตเสมอ ดังนั้นขนาด Prefix ของ Subnet สำหรับ SLAAC ต้องเป็น /64 หากกำหนดเป็น /80 ระบบ SLAAC จะพังทันทีและไม่สามารถสร้างแอดเดรสได้"
+      },
+      {
+        id: 8,
+        question: "จงหา IEEE EUI-64 Interface Identifier จากหมายเลข MAC Address: 00:1A:2B:3C:4D:5E",
+        options: [
+          "001a:2bff:fe3c:4d5e",
+          "021a:2bff:fe3c:4d5e",
+          "001a:2bfe:ff3c:4d5e",
+          "021a:2b3c:4d5e:fffe"
+        ],
+        answer: 1,
+        explain: "ขั้นตอน: (1) แทรก FF:FE คั่นกลางระหว่าง 3 ไบต์แรกและ 3 ไบต์หลัง ➔ 00:1A:2B:FF:FE:3C:4D:5E (2) กลับบิตที่ 7 (U/L bit) ของไบต์แรกสุด: 0016 = 0000 00002 กลับบิตที่ 7 ได้ 0000 00102 = 0216 ดังนั้นคำตอบคือ 021a:2bff:fe3c:4d5e"
+      },
+      {
+        id: 9,
+        question: "ข้อใดเป็นกฎข้อห้ามที่สำคัญที่สุดของระเบียน CNAME ในระบบ DNS?",
+        options: [
+          "ห้ามชี้ไปยังโดเมนที่อยู่ภายนอก Autonomous System เดียวกัน",
+          "ชื่อ FQDN ใดที่มีระเบียน CNAME อยู่แล้ว จะต้องไม่มีระเบียนชนิดอื่น (เช่น A, AAAA, หรือ MX) ซ้อนทับในชื่อเดียวกันอย่างเด็ดขาด",
+          "สามารถใช้งานได้เฉพาะกับเครื่องแม่ข่ายอีเมล (Mail Server) เท่านั้น",
+          "จะต้องมีค่า TTL ไม่เกิน 60 วินาทีเสมอ"
+        ],
+        answer: 1,
+        explain: "ตามมาตรฐาน DNS กฎเหล็กของ CNAME คือ CNAME Exclusivity Rule กล่าวคือ หากชื่อโดเมนใดเป็น Alias (มีระเบียน CNAME) ชื่อนั้นห้ามมีระเบียนชนิดอื่น (เช่น A, MX, TXT) อยู่ร่วมด้วยในชื่อเดียวกันอย่างเด็ดขาด"
+      },
+      {
+        id: 10,
+        question: "ในโปรโตคอล FTP โหมด Passive เมื่อเซิร์ฟเวอร์ส่งการตอบกลับว่า '227 Entering Passive Mode (10,0,0,1, 150, 40)' หมายเลขพอร์ต TCP ที่ไคลเอนต์ต้องเปิดการเชื่อมต่อ Data Connection คือพอร์ตใด?",
+        options: [
+          "38,440",
+          "15,040",
+          "21",
+          "65,535"
+        ],
+        answer: 0,
+        explain: "สูตรคำนวณหมายเลข Data Port ของ FTP โหมด Passive: Data Port = (p1 × 256) + p2 โดยจากโจทย์ p1 = 150, p2 = 40 ➔ (150 × 256) + 40 = 38,400 + 40 = 38,440"
+      }
+    ];
+
+    const quiz2Data = [
+      {
+        id: 1,
+        question: "เครือข่ายความเร็ว R = 100 Mbps มีเวลา Round-Trip Time (RTT) = 40 ms จงคำนวณขนาด Bandwidth-Delay Product (BDP) ในหน่วยบิต และขนาดบัฟเฟอร์ขั้นต่ำในหน่วยไบต์",
+        options: [
+          "BDP = 4,000,000 bits, Buffer_min = 500,000 Bytes",
+          "BDP = 400,000 bits, Buffer_min = 50,000 Bytes",
+          "BDP = 4,000,000 bits, Buffer_min = 4,000,000 Bytes",
+          "BDP = 2,500,000 bits, Buffer_min = 312,500 Bytes"
+        ],
+        answer: 0,
+        explain: "BDP (bits) = R × RTT = (100 × 10^6 bps) × (40 × 10^-3 s) = 100 × 40 × 10^3 = 4,000,000 บิต แปลงเป็นไบต์โดยหาร 8: Buffer_min = 4,000,000 / 8 = 500,000 ไบต์"
+      },
+      {
+        id: 2,
+        question: "แพ็กเก็ต IPv4 ขนาดข้อมูลรวม 4,000 ไบต์ (Header 20 ไบต์ + Payload 3,980 ไบต์) ถูกส่งผ่านลิงก์ที่มี MTU = 1,500 ไบต์ ชิ้นส่วน Fragment ที่ 2 (ลำดับถัดจากชิ้นแรก) จะมีค่า Data Payload, แฟล็ก MF และค่า Fragment Offset เท่าใด?",
+        options: [
+          "Data Payload = 1,480 ไบต์, MF = 1, Fragment Offset = 185",
+          "Data Payload = 1,500 ไบต์, MF = 1, Fragment Offset = 185",
+          "Data Payload = 1,480 ไบต์, MF = 0, Fragment Offset = 1,480",
+          "Data Payload = 1,020 ไบต์, MF = 0, Fragment Offset = 370"
+        ],
+        answer: 0,
+        explain: "ขนาด Payload สูงสุดต่อชิ้น = floor((1500 - 20)/8) × 8 = 1,480 ไบต์ (1) Fragment 1: Data = 1,480B, MF = 1, Offset = 0 (2) Fragment 2: ข้อมูลสะสมก่อนหน้า = 1,480B, Offset = 1480 / 8 = 185, Data = 1,480B, MF = 1 (ข้อมูลรวมสองชิ้นแรก = 2,960B ยังไม่หมดจาก 3,980B จึงมี MF=1)"
+      },
+      {
+        id: 3,
+        question: "ในเครือข่าย Data Center ที่เปิดใช้งาน Jumbo Frames (MTU = 9,000 ไบต์) และใช้งานโปรโตคอล IPv6 จงหาขนาด Maximum Segment Size (MSS) ขั้นต่ำของ TCP (สมมติว่าไม่มี IPv6 Extension Headers และไม่มี TCP Options)",
+        options: [
+          "8,960 ไบต์",
+          "8,940 ไบต์",
+          "9,000 ไบต์",
+          "8,920 ไบต์"
+        ],
+        answer: 1,
+        explain: "สูตร IPv6 TCP MSS = MTU - IPv6 Header (40 ไบต์) - TCP Header (20 ไบต์) = MTU - 60 ไบต์ แทนค่า: MSS = 9,000 - 60 = 8,940 ไบต์ (หากเป็น IPv4 จะหัก 40 ไบต์ ได้ 8,960 ไบต์)"
+      },
+      {
+        id: 4,
+        question: "ส่งแพ็กเก็ตขนาด L = 1,500 ไบต์ ผ่านโครงข่ายแบบ Store-and-Forward จำนวน 3 ลิงก์ แต่ละลิงก์มีแบนด์วิดท์ R = 10 Mbps ระยะทางสายใยแก้วนำแสงรวมทั้งหมด D = 1,000 km (ความเร็วคลื่น v = 2 × 10^8 m/s) โดยไม่คิดค่า Queuing และ Processing Delay จงหาเวลารวม End-to-End Latency",
+        options: [
+          "6.2 ms",
+          "8.6 ms",
+          "5.0 ms",
+          "3.6 ms"
+        ],
+        answer: 1,
+        explain: "1. Transmission Delay ต่อลิงก์: d_trans = (1,500 × 8 bits) / (10 × 10^6 bps) = 12,000 / 10,000,000 = 1.2 ms ส่งผ่าน 3 ลิงก์แบบ Store-and-Forward: 3 × 1.2 ms = 3.6 ms 2. Propagation Delay รวม: d_prop = 1,000 km / (200 km/ms) = 5.0 ms เวลารวม T_total = 3.6 ms + 5.0 ms = 8.6 ms"
+      },
+      {
+        id: 5,
+        question: "ลิงก์เครือข่ายความเร็วสูง 10 Gbps (Transmission Rate = 1.25 × 10^9 Bytes/sec) ใช้ TCP ฟิลด์ Sequence Number ขนาด 32 บิต จงหาเวลา Sequence Number Wrap-Around Time (T_wrap) และวิธีการป้องกันการสับสนของลำดับข้อมูลตามมาตรฐาน RFC",
+        options: [
+          "T_wrap ≈ 3.44 วินาที, แก้ไขโดยเปิดใช้งาน TCP Timestamps Option (PAWS, RFC 7323)",
+          "T_wrap ≈ 120 วินาที, ไม่จำเป็นต้องแก้ไขเพราะอยู่ในเกณฑ์ 2MSL",
+          "T_wrap ≈ 34.4 วินาที, แก้ไขโดยการเปลี่ยนไปใช้ UDP",
+          "T_wrap ≈ 3.44 วินาที, แก้ไขโดยการปิด Nagle's Algorithm"
+        ],
+        answer: 0,
+        explain: "T_wrap = (2^32 Bytes) / (Rate Bytes/sec) = 4,294,967,296 / (1.25 × 10^9) ≈ 3.436 วินาที เนื่องจากเวลานี้น้อยกว่าค่า MSL (60-120 วินาที) ทำให้ Sequence Number วนกลับมาซ้ำกับแพ็กเก็ตเก่าที่ยังลอยอยู่ในเครือข่าย แก้ไขโดยใช้ TCP Timestamps Option (PAWS: Protection Against Wrapped Sequences, RFC 7323)"
+      },
+      {
+        id: 6,
+        question: "โฮสต์ต้องการส่งข้อความ ICMPv6 Neighbor Solicitation (NS) ไปยังเป้าหมาย IPv6: 2001:db8:1:1::12:3456 จงหาค่า Solicited-Node Multicast Address และ Ethernet Multicast MAC Address ปลายทาง",
+        options: [
+          "IP: ff02::1:ff12:3456 และ MAC: 33:33:ff:12:34:56",
+          "IP: ff02::1:12:3456 และ MAC: 01:00:5e:12:34:56",
+          "IP: fe80::1:ff12:3456 และ MAC: 33:33:00:12:34:56",
+          "IP: ff02::1:ff00:0001 และ MAC: FF:FF:FF:FF:FF:FF"
+        ],
+        answer: 0,
+        explain: "Solicited-Node Multicast Address มีรูปแบบ ff02::1:ffxx:xxxx โดยนำ 24 บิตท้ายของ Target IP (12:3456) มาต่อท้าย ได้เป็น ff02::1:ff12:3456 และแปลงเป็น Multicast MAC สำหรับ IPv6 ในรูปแบบ 33:33:xx:xx:xx:xx (นำ 32 บิตท้ายมาใส่) ได้เป็น 33:33:ff:12:34:56"
+      },
+      {
+        id: 7,
+        question: "หน้าเว็บหนึ่งประกอบด้วยไฟล์ Base HTML 1 ไฟล์ และรูปภาพฝังอยู่ 4 รูป การดึงข้อมูลทั้งหมดระหว่าง HTTP/1.0 (Non-persistent) และ HTTP/1.1 (Persistent + Pipelined) จะใช้เวลา Latency ต่างกันกี่ RTT (สมมติว่าไม่คิด Transmission Delay)?",
+        options: [
+          "HTTP/1.0 ใช้ 10 RTT ส่วน HTTP/1.1 ใช้ 3 RTT (ประหยัดได้ 7 RTT)",
+          "HTTP/1.0 ใช้ 5 RTT ส่วน HTTP/1.1 ใช้ 2 RTT (ประหยัดได้ 3 RTT)",
+          "HTTP/1.0 ใช้ 8 RTT ส่วน HTTP/1.1 ใช้ 4 RTT (ประหยัดได้ 4 RTT)",
+          "ทั้งสองโปรโตคอลใช้เวลาเท่ากันคือ 5 RTT"
+        ],
+        answer: 0,
+        explain: "HTTP/1.0 (Non-persistent): แต่ละ Object ต้องเปิด TCP ใหม่ (1 RTT Handshake + 1 RTT GET) รวม (1 + 4) × 2 RTT = 10 RTT ส่วน HTTP/1.1 (Persistent + Pipelining): Base HTML ใช้ 2 RTT (Handshake + GET) จากนั้นส่ง Pipelined ขอทั้ง 4 รูปพร้อมกันใช้เพิ่มอีก 1 RTT รวมเป็น 3 RTT ประหยัดได้ 10 - 3 = 7 RTT"
+      },
+      {
+        id: 8,
+        question: "จากการดักจับแพ็กเก็ต (Packet Trace) พบว่าไคลเอนต์ส่งแพ็กเก็ต [SYN, Seq=100] ไปยังเซิร์ฟเวอร์ที่พอร์ต 8080 และเซิร์ฟเวอร์ตอบกลับมาทันทีด้วย [RST, ACK=101, Seq=0] เหตุการณ์นี้บ่งบอกถึงสถานะใดของเซิร์ฟเวอร์?",
+        options: [
+          "เซิร์ฟเวอร์ทำงานปกติและยินดีเปิดการเชื่อมต่อ",
+          "เซิร์ฟเวอร์ไม่มี Listening Socket หรือ Process ใดเปิดรับอยู่ที่พอร์ต 8080 (Connection Refused)",
+          "เครือข่ายเกิดความคับคั่งอย่างรุนแรงจนเราเตอร์ต้องตัดการเชื่อมต่อ",
+          "ไคลเอนต์ส่ง Checksum ผิดพลาด เซิร์ฟเวอร์จึงขอให้ส่งใหม่"
+        ],
+        answer: 1,
+        explain: "เมื่อมี TCP SYN ส่งมายังหมายเลขพอร์ตที่ไม่มีแอปพลิเคชันหรือโปรเซสใด bind/listen อยู่เลย TCP Stack ของ OS ปลายทางจะสร้างและส่ง Segment ที่มีแฟล็ก RST ตอบกลับทันที เพื่อตัดปัญหาและแจ้งเตือนให้ผู้ส่งทราบว่า Connection Refused โดยไม่ต้องเสียเวลารอ Timeout"
+      },
+      {
+        id: 9,
+        question: "สวิตช์ Layer 2 ตัวหนึ่งเพิ่งเปิดใช้งาน (ตาราง MAC ว่างเปล่า) เมื่อโฮสต์ A ส่งเฟรม Unicast ไปหาโฮสต์ B สวิตช์จะดำเนินการอย่างไรกับเฟรมนี้?",
+        options: [
+          "ทิ้งเฟรมทันทีเนื่องจากยังไม่รู้จักโฮสต์ B",
+          "บันทึก Source MAC ของโฮสต์ A คู่กับพอร์ตที่รับเข้ามาลงใน MAC Table และทำการ Flooding เฟรมออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา",
+          "ส่งเฟรมออกเฉพาะพอร์ตที่เป็น Default Gateway",
+          "ส่งข้อความ ICMP ไปถามโฮสต์ B ว่าอยู่ที่พอร์ตใด"
+        ],
+        answer: 1,
+        explain: "เมื่อได้รับเฟรม สวิตช์จะเรียนรู้ Source MAC ทันที (บันทึก MAC ของ A คู่กับ Ingress Port) จากนั้นเมื่อตรวจสอบ Destination MAC ของ B แล้วพบว่าเป็น Unknown Unicast (ยังไม่มีในตาราง) สวิตช์จะทำ Flooding ส่งเฟรมออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา"
+      },
+      {
+        id: 10,
+        question: "องค์กรได้รับบล็อกเครือข่าย IPv6: 2001:db8:acad::/48 หากต้องการแบ่งเป็นซับเน็ตขนาด /64 จะได้จำนวนซับเน็ตย่อยทั้งหมดกี่ซับเน็ต และแอดเดรสของซับเน็ตลำดับที่ 75 (เริ่มนับ 0) คือแอดเดรสใด?",
+        options: [
+          "65,536 ซับเน็ต, แอดเดรส: 2001:db8:acad:4b::/64",
+          "65,536 ซับเน็ต, แอดเดรส: 2001:db8:acad:75::/64",
+          "16 ซับเน็ต, แอดเดรส: 2001:db8:acad:004b::/64",
+          "256 ซับเน็ต, แอดเดรส: 2001:db8:acad:4b00::/64"
+        ],
+        answer: 0,
+        explain: "จำนวนบิตซับเน็ต = 64 - 48 = 16 บิต ทำให้ได้จำนวนซับเน็ตย่อยทั้งหมด 2^16 = 65,536 ซับเน็ต ลำดับที่ 75 ในเลขฐานสิบต้องแปลงเป็นเลขฐานสิบหก (Hexadecimal): 75 = 64 + 11 = 0x4b ดังนั้นแอดเดรสของซับเน็ตลำดับที่ 75 คือ 2001:db8:acad:4b::/64"
+      }
+    ];
+
+    function renderQuiz(quizNum, data, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      data.forEach((q, idx) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'surface-card rounded-xl p-4 space-y-2.5';
+        qDiv.id = `qbox-${quizNum}-${idx}`;
+
+        let optionsHtml = '';
+        q.options.forEach((opt, oIdx) => {
+          optionsHtml += `
+            <label class="flex items-start gap-2.5 p-1.5 rounded hover:bg-[var(--bg-subtle)] cursor-pointer transition text-xs text-[var(--text-secondary)]">
+              <input type="radio" name="q-${quizNum}-${idx}" value="${oIdx}" class="mt-0.5 accent-[var(--accent)]">
+              <span class="leading-relaxed">${opt}</span>
+            </label>
+          `;
+        });
+
+        qDiv.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <span class="font-medium text-[var(--text-main)] text-xs sm:text-sm">ข้อที่ ${idx + 1}: ${q.question}</span>
+            <span id="badge-${quizNum}-${idx}" class="text-[11px] px-2 py-0.5 rounded font-mono hidden whitespace-nowrap"></span>
+          </div>
+          <div class="space-y-0.5 pt-1">
+            ${optionsHtml}
+          </div>
+          <div id="exp-${quizNum}-${idx}" class="hidden p-3 rounded-lg subtle-box text-xs text-[var(--text-secondary)] space-y-1">
+            <strong class="text-[var(--text-main)] block">เฉลยและเหตุผลประกอบ:</strong>
+            <p class="leading-relaxed">${q.explain}</p>
+          </div>
+        `;
+        container.appendChild(qDiv);
+      });
+    }
+
+    function gradeQuiz(quizNum) {
+      const data = quizNum === 1 ? quiz1Data : quiz2Data;
+      let score = 0;
+
+      data.forEach((q, idx) => {
+        const radios = document.getElementsByName(`q-${quizNum}-${idx}`);
+        let selected = -1;
+        radios.forEach(r => {
+          if (r.checked) selected = parseInt(r.value);
+        });
+
+        const badge = document.getElementById(`badge-${quizNum}-${idx}`);
+        const exp = document.getElementById(`exp-${quizNum}-${idx}`);
+
+        badge.classList.remove('hidden');
+        exp.classList.remove('hidden');
+
+        if (selected === q.answer) {
+          score++;
+          badge.className = 'text-[11px] px-2 py-0.5 rounded font-mono bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
+          badge.textContent = '✓ ถูกต้อง';
+        } else {
+          badge.className = 'text-[11px] px-2 py-0.5 rounded font-mono bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20';
+          badge.textContent = selected === -1 ? '✗ ไม่ได้ตอบ' : '✗ ไม่ถูกต้อง';
+        }
+      });
+
+      const scoreVal = document.getElementById(`score-val-${quizNum}`);
+      if (scoreVal) scoreVal.textContent = score;
+      alert(`ผลคะแนนชุดที่ ${quizNum}: ${score} / ${data.length} คะแนน`);
+    }
+
+    function resetQuiz(quizNum) {
+      const data = quizNum === 1 ? quiz1Data : quiz2Data;
+      data.forEach((q, idx) => {
+        const radios = document.getElementsByName(`q-${quizNum}-${idx}`);
+        radios.forEach(r => r.checked = false);
+        const badge = document.getElementById(`badge-${quizNum}-${idx}`);
+        const exp = document.getElementById(`exp-${quizNum}-${idx}`);
+        if (badge) badge.classList.add('hidden');
+        if (exp) exp.classList.add('hidden');
+      });
+      const scoreVal = document.getElementById(`score-val-${quizNum}`);
+      if (scoreVal) scoreVal.textContent = '0';
+    }
+
+    function calculateBDP() {
+      const bw = parseFloat(document.getElementById('bdp-bw').value) || 0;
+      const rtt = parseFloat(document.getElementById('bdp-rtt').value) || 0;
+      const bdpBits = bw * 1e6 * (rtt * 1e-3);
+      const bdpBytes = bdpBits / 8;
+      document.getElementById('bdp-res').innerHTML = `
+        BDP: <strong>${bdpBits.toLocaleString()} บิต</strong><br>
+        Buffer_min: <strong>${bdpBytes.toLocaleString()} ไบต์</strong>
+      `;
+    }
+
+    function calculateFTPPort() {
+      const p1 = parseInt(document.getElementById('ftp-p1').value) || 0;
+      const p2 = parseInt(document.getElementById('ftp-p2').value) || 0;
+      const port = (p1 * 256) + p2;
+      document.getElementById('ftp-res').innerHTML = `
+        สูตร: (${p1} × 256) + ${p2}<br>
+        Data Port: <strong>${port}</strong>
+      `;
+    }
+
+    function calculateMSS() {
+      const mtu = parseInt(document.getElementById('mss-mtu').value) || 1500;
+      const ver = document.getElementById('mss-ipver').value;
+      if (ver === 'ipv4') {
+        const mss = mtu - 40;
+        document.getElementById('mss-res').innerHTML = `IPv4 MSS = ${mtu} - 40 = <strong>${mss} ไบต์</strong>`;
+      } else {
+        const mss = mtu - 60;
+        document.getElementById('mss-res').innerHTML = `IPv6 MSS = ${mtu} - 60 = <strong>${mss} ไบต์</strong>`;
+      }
+    }
+
+    function calculateEUI64() {
+      const macStr = document.getElementById('eui-mac').value.trim();
+      const parts = macStr.split(/[:-]/);
+      if (parts.length !== 6) {
+        document.getElementById('eui-res').textContent = 'กรุณาระบุ MAC 6 ไบต์';
+        return;
+      }
+      let b0 = parseInt(parts[0], 16) ^ 0x02;
+      const b0Hex = b0.toString(16).padStart(2, '0');
+      const iid = `${b0Hex}${parts[1]}:${parts[2]}ff:fe${parts[3]}:${parts[4]}${parts[5]}`;
+      document.getElementById('eui-res').innerHTML = `Interface ID: <strong>${iid}</strong>`;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderQuiz(1, quiz1Data, 'quiz1-container');
+      renderQuiz(2, quiz2Data, 'quiz2-container');
+      calculateBDP();
+      calculateFTPPort();
+      calculateMSS();
+      calculateEUI64();
+    });
+  </script>
+</body>
+</html>
